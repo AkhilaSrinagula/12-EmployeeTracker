@@ -1,0 +1,26 @@
+{
+  "name": "12-employeetracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AkhilaSrinagula/12-EmployeeTracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AkhilaSrinagula/12-EmployeeTracker/issues"
+  },
+  "homepage": "https://github.com/AkhilaSrinagula/12-EmployeeTracker#readme",
+  "dependencies": {
+    "inquirer": "^8.2.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3",
+    "table": "^6.7.5"
+  }
+}
