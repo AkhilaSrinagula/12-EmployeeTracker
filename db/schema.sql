@@ -28,6 +28,6 @@ INSERT INTO department(name) VALUES ("Human Resources"), ("Finance"), ("Informat
 
 INSERT INTO roles (title, salary, department_id) VALUES ("HR Specialist", 25000, 1), ("Accountant", 30000, 2), ("Software Engineer", 50000, 3), ("Software Engineer Manager", 20000, 4), ("HR Manager", 25000, 5);
 
-INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Akhila", "Srinagula", 3, 3),("Santosh", "Sabadu", 3, 3),("Mayuka", "sabadu", 4 ,null),("John", "Doe", 1, 6),("Jane", "Doe", 1, 6),("Dwayne", "Johnson", 5, null);
+INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES ("Akhila", "Srinagula", 3, 3),("Santosh", "Shabadu", 3, 3),("Mayukha", "Shabadu", 4 ,null),("John", "Doe", 1, 6),("Jane", "Doe", 1, 6),("Dwayne", "Johnson", 5, null);
 
 SELECT * FROM employee_database.employee;
