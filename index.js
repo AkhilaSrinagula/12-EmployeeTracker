@@ -144,10 +144,53 @@ function addRole() {
 }
 
 function addEmployee() {
-  // to be completed
-  connection.query("SELECT * FROM employee", function (err, res) {
-    console.table(res);
-  });
+    connection.query("SELECT title FROM roles", function(err, res) {
+        if (err) {
+            throw (err);
+        }
+        var roles = [];
+        for (var i = 0; i < res.length; i++) {
+            roles.push(res[i].title);
+        } 
+
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter the new Employee's First Name: ",
+                name: "firstName"
+            }, 
+            {
+                type: "input",
+                message: "Enter the new Employee's Last Name: ",
+                name: "lastName"
+            }, 
+            {
+                type: "list",
+                message: "Enter the new Employee's Role Id: ",
+                choices: roles,
+                name: "roleId"
+            }, 
+            {
+                type: "input",
+                message: "Enter the new Employee's Manager Id: ",
+                name: "managerId"
+            }
+        ]).then(function (answers) {
+            connection.query("SELECT id from roles WHERE ?", {title: answers.roleId}, function(err, res) {
+                  if (err) {
+                      throw (err);
+                  }
+                  var roleId = res[0].role_id;
+                  connection.query("INSERT INTO employee SET?", {
+                    first_name: answers.firstName,
+                    last_name: answers.lastName,
+                    role_id: res[0].id,
+                    manager_id: answers.managerId
+                  })  
+            });
+        });
+
+    });
 }
 
 function updateEmployeeRole() {
