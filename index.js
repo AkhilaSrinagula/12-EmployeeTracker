@@ -153,43 +153,60 @@ function addEmployee() {
             roles.push(res[i].title);
         } 
 
-        inquirer.prompt([
-            {
-                type: "input",
-                message: "Enter the new Employee's First Name: ",
-                name: "firstName"
-            }, 
-            {
-                type: "input",
-                message: "Enter the new Employee's Last Name: ",
-                name: "lastName"
-            }, 
-            {
-                type: "list",
-                message: "Enter the new Employee's Role Id: ",
-                choices: roles,
-                name: "roleId"
-            }, 
-            {
-                type: "input",
-                message: "Enter the new Employee's Manager Id: ",
-                name: "managerId"
+        connection.query("SELECT first_name FROM employee WHERE manager_id IS NULL;", function(err, res) {
+            if (err) {
+                throw (err);
             }
-        ]).then(function (answers) {
-            connection.query("SELECT id from roles WHERE ?", {title: answers.roleId}, function(err, res) {
-                  if (err) {
-                      throw (err);
-                  }
-                  var roleId = res[0].role_id;
-                  connection.query("INSERT INTO employee SET?", {
-                    first_name: answers.firstName,
-                    last_name: answers.lastName,
-                    role_id: res[0].id,
-                    manager_id: answers.managerId
-                  })  
-            });
-        });
 
+            var managers = [];
+            for (var i = 0; i < res.length; i++) {
+                managers.push(res[i].first_name);
+            }
+
+            inquirer.prompt([
+               {
+                   type: "input",
+                   message: "Enter the new Employee's First Name: ",
+                   name: "firstName"
+               }, 
+               {
+                   type: "input",
+                   message: "Enter the new Employee's Last Name: ",
+                   name: "lastName"
+               }, 
+               {
+                   type: "list",
+                   message: "Enter the new Employee's Role Id: ",
+                   choices: roles,
+                   name: "roleId"
+               }, 
+               {
+                   type: "list",
+                   message: "Select the Employee's Manager: ",
+                   choices: managers,
+                   name: "managerId"
+               }
+           ]).then(function (answers) {
+               connection.query("SELECT id from roles WHERE ?", {title: answers.roleId}, function(err, response) {
+                     if (err) {
+                         throw (err);
+                     }
+
+                     connection.query("SELECT id from employee WHERE?", {first_name: answers.managerId}, function(err, res) {
+                         if (err) {
+                             throw (err);
+                         }
+                         connection.query("INSERT INTO employee SET?", {
+                           first_name: answers.firstName,
+                           last_name: answers.lastName,
+                           role_id: response[0].id,
+                           manager_id: res[0].id
+                         }) 
+                         userInput();
+                     });
+               });
+           });
+       });
     });
 }
 
