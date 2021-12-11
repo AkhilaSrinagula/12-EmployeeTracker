@@ -84,16 +84,62 @@ function viewAllEmployees() {
 }
 
 function addDepartment() {
-  // to be completed
-  connection.query("SELECT * FROM employee", function (err, res) {
-    console.table(res);
-  });
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "Enter the name of the new Department: ",
+            name: "Department"
+        }
+    ]).then(function (answers) {
+        connection.query("INSERT INTO department SET?", {
+            name: answers.Department   
+        });
+        userInput();
+    })
 }
 
 function addRole() {
-  // to be completed
-  connection.query("SELECT * FROM employee", function (err, res) {
-    console.table(res);
+    connection.query("SELECT * FROM department", function(err, res) {
+        if (err) {
+            throw (err);
+        }
+        var departments = [];
+        for (var i = 0; i < res.length; i++) {
+            departments.push(res[i].name);
+        }
+
+        inquirer.prompt([
+            {
+                type: "input",
+                message: "Enter the new Role's title: ",
+                name: "title"
+            }, 
+            {
+                type: "input",
+                message: "Enter the new Role's Salary: ",
+                name: "salary"
+            }, 
+            {
+                type: "list",
+                message: "Enter the new Role's Department Id: ",
+                choices: departments,
+                name: "departmentId"
+            }, 
+        ]).then(function (answers) {
+            connection.query("SELECT id FROM department where ?", {name: answers.departmentId}, function(err, res) {
+                 if (err) {
+                     throw (err)
+                 }
+
+                 var id = res[0].id;
+                 connection.query("INSERT INTO roles SET?", {
+                    title: answers.title,
+                    salary: answers.salary,
+                    department_id: id
+                });
+                userInput();
+            });    
+        });
   });
 }
 
