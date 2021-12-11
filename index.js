@@ -1,5 +1,5 @@
-var inquirer = require('inquirer')
-var mysql = require('msql')
+var inquirer  = require("inquirer")
+var mysql = require("mysql")
 
 var connection = mysql.createConnection ({
     host: "localhost",
@@ -52,7 +52,7 @@ function userInput() {
             case "Add an Employee": 
             addEmployee();
             break;
-            
+
             case "Update an Employee Role": 
             updateEmployeeRole();
             break;
