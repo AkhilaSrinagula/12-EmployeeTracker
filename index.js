@@ -65,18 +65,21 @@ function userInput() {
 function viewAllDpeartments() {
   connection.query("SELECT * FROM department", function (err, res) {
     console.table(res);
+            userInput(); 
   });
 }
 
 function viewAllRoles() {
   connection.query("SELECT * FROM roles", function (err, res) {
-    console.table(res);
+    console.table(res); 
+        userInput(); 
   });
 }
 
 function viewAllEmployees() {
-  connection.query("SELECT * FROM employee", function (err, res) {
-    console.table(res);
+    connection.query("SELECT e.id, e.first_name, e.last_name, r.department_id, r.title, r.salary, b.first_name AS manager  FROM (employee e INNER JOIN roles r on e.role_id = r.id) LEFT JOIN employee b on e.manager_id = b.id", function(err, res) {
+        console.table(res);  
+        userInput();
   });
 }
 
