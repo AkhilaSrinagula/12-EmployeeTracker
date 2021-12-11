@@ -28,14 +28,15 @@ Javascript, Node JS, Inquirer JS, MySQL.
 * Update an Employee's roles by providing the roles so the end user can choose the new role from the given roles and update's the employee's salary accordingly.
 
 # Demo
-
+https://watch.screencastify.com/v/XjEBIbzFU0yBh6NGcwKe
 
 # Preview
-
+![View](Preview.png)
 
 
 # GitHub Repo Link:
 
+https://github.com/AkhilaSrinagula/12-EmployeeTracker.git
 
 # Questions
 
